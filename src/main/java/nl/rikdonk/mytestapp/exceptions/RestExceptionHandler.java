@@ -1,4 +1,4 @@
-package nl.rikdonk.mytestapp.controllers;
+package nl.rikdonk.mytestapp.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class EmployeeRestExceptionHandler {
+public class RestExceptionHandler {
 
     // Add an exception handler using @ExceptionHandler
     @ExceptionHandler
-    public ResponseEntity<EmployeeErrorResponse> handleException(EmployeeNotFoundException exc) {
+    public ResponseEntity<ErrorResponse> handleException(NotFoundException exc) {
 
         // create a EmployeeErrorResponse
-        var error = new EmployeeErrorResponse();
+        var error = new ErrorResponse();
         error.setStatus(HttpStatus.NOT_FOUND.value());
         error.setMessage(exc.getMessage());
         error.setTimeStamp(System.currentTimeMillis());
@@ -23,9 +23,9 @@ public class EmployeeRestExceptionHandler {
 
     // Add another exception handler to catch any exception (catch all)
     @ExceptionHandler
-    public ResponseEntity<EmployeeErrorResponse> handleException(Exception exc) {
+    public ResponseEntity<ErrorResponse> handleException(Exception exc) {
         // create a EmployeeErrorResponse
-        var error = new EmployeeErrorResponse();
+        var error = new ErrorResponse();
         error.setStatus(HttpStatus.BAD_REQUEST.value());
         error.setMessage(exc.getMessage());
         error.setTimeStamp(System.currentTimeMillis());

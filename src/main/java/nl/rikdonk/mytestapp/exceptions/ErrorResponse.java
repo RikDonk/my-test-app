@@ -1,14 +1,14 @@
-package nl.rikdonk.mytestapp.controllers;
+package nl.rikdonk.mytestapp.exceptions;
 
-public class EmployeeErrorResponse {
+public class ErrorResponse {
     private int status;
     private String message;
     private long timeStamp;
 
-    public EmployeeErrorResponse() {
+    public ErrorResponse() {
     }
 
-    public EmployeeErrorResponse(int status, String message, long timeStamp) {
+    public ErrorResponse(int status, String message, long timeStamp) {
         this.status = status;
         this.message = message;
         this.timeStamp = timeStamp;

@@ -1,9 +1,12 @@
 package nl.rikdonk.mytestapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
-@Table(name="Employee")
+@Table(name="Employees")
 public class Employee {
     // define fields
     @Id
@@ -25,8 +28,14 @@ public class Employee {
     @JoinColumn(name="employee_detail_id")
     private EmployeeDetail employeeDetail;
 
-    // define constructors
 
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH}) // removes only the department, not the employee
+    @JoinColumn(name="department_id") // column name in table Employee
+    @JsonBackReference // prevent Infinite recursion (StackOverFlowError)
+    private Department department;
+
+
+    // define constructors
     public Employee() {
     }
 
@@ -79,9 +88,15 @@ public class Employee {
         this.employeeDetail = employeeDetail;
     }
 
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
     // define toString() method
-
-
     @Override
     public String toString() {
         return "Employee{" +

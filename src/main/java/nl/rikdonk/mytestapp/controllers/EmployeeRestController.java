@@ -1,7 +1,8 @@
 package nl.rikdonk.mytestapp.controllers;
 
 import nl.rikdonk.mytestapp.entities.Employee;
-import nl.rikdonk.mytestapp.services.IEmployeeService;
+import nl.rikdonk.mytestapp.exceptions.NotFoundException;
+import nl.rikdonk.mytestapp.services.interfaces.IEmployeeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class EmployeeRestController {
 
         var theEmployee = employeeService.findById(employeeId);
         if(theEmployee == null){
-            throw new EmployeeNotFoundException("Employee id not found - " + employeeId);
+            throw new NotFoundException("Employee id not found - " + employeeId);
         }
 
         return theEmployee;
@@ -52,7 +53,7 @@ public class EmployeeRestController {
         var tempEmployee = employeeService.findById(employeeId);
 
         if(tempEmployee == null) {
-            throw new EmployeeNotFoundException("Employee id not found - " + employeeId);
+            throw new NotFoundException("Employee id not found - " + employeeId);
         }
 
         employeeService.deleteById(employeeId);

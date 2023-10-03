@@ -1,22 +1,22 @@
-package nl.rikdonk.mytestapp.dao;
+package nl.rikdonk.mytestapp.services.repositories;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import jakarta.transaction.Transactional;
 import nl.rikdonk.mytestapp.entities.Employee;
+import nl.rikdonk.mytestapp.services.repositories.interfaces.IEmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public class EmployeeDAO implements IEmployeeDAO{
+public class EmployeeRepository implements IEmployeeRepository {
 
     // define field for entity manager
     private EntityManager entityManager;
 
     @Autowired
-    public EmployeeDAO(EntityManager entityManager) {
+    public EmployeeRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
@@ -53,5 +53,19 @@ public class EmployeeDAO implements IEmployeeDAO{
         var theEmployee = entityManager.find(Employee.class, theId);
         // remove employee
         entityManager.remove(theEmployee);
+    }
+
+    @Override
+    public List<Employee> findEmployeesByDepartmentId(int theId) {
+
+        TypedQuery<Employee> query = entityManager.createQuery(
+                "from Employee where department.id = :data", Employee.class
+        );
+
+        query.setParameter("data", theId);
+        List<Employee> employees = query.getResultList();
+
+
+        return employees;
     }
 }

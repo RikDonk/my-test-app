@@ -1,10 +1,11 @@
-package nl.rikdonk.mytestapp.services;
+package nl.rikdonk.mytestapp.services.repositories.interfaces;
 
 import nl.rikdonk.mytestapp.entities.Employee;
 
 import java.util.List;
 
-public interface IEmployeeService {
+public interface IEmployeeRepository {
+
     List<Employee> findAll();
 
     Employee findById(int theId);
@@ -12,4 +13,6 @@ public interface IEmployeeService {
     Employee save(Employee theEmployee);
 
     void deleteById(int theId);
+
+    List<Employee> findEmployeesByDepartmentId(int theId);
 }
