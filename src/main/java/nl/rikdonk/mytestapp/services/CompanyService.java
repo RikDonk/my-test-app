@@ -1,10 +1,13 @@
 package nl.rikdonk.mytestapp.services;
 
 import jakarta.transaction.Transactional;
+import nl.rikdonk.mytestapp.dto.CompanyDTO;
+import nl.rikdonk.mytestapp.dto.converters.CompanyDTOConverter;
 import nl.rikdonk.mytestapp.entities.Company;
 import nl.rikdonk.mytestapp.exceptions.NotFoundException;
 import nl.rikdonk.mytestapp.repositories.interfaces.ICompanyRepository;
 import nl.rikdonk.mytestapp.services.interfaces.ICompanyService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,26 +17,33 @@ public class CompanyService implements ICompanyService {
 
     private ICompanyRepository repoCompany;
 
+    @Autowired
+    CompanyDTOConverter companyDTOConverter;
+
     public CompanyService(ICompanyRepository repoCompany) {
         this.repoCompany = repoCompany;
     }
 
     @Override
-    public List<Company> findAll() {
-        return repoCompany.findAll();
+    public List<CompanyDTO> findAll() {
+        var companies = repoCompany.findAll();
+
+        return companyDTOConverter.mapList(companies, CompanyDTO.class);
     }
 
     @Override
-    public Company findById(int theId) {
-        Company Company = null;
+    public CompanyDTO findById(int theId) {
+        Company company = null;
 
-        Company = repoCompany.findByIdWithDepartments(theId);
+        company = repoCompany.findByIdWithDepartments(theId);
 
-        if(Company == null) {
+        if(company == null) {
             throw new NotFoundException("Company not found - " + theId);
         }
 
-        return Company;
+        CompanyDTO companyDTO = companyDTOConverter.convert(company);
+
+        return companyDTO;
     }
 
     @Override

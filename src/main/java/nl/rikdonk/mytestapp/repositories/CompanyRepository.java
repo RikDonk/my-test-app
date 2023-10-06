@@ -6,7 +6,6 @@ import nl.rikdonk.mytestapp.entities.Company;
 import nl.rikdonk.mytestapp.repositories.interfaces.ICompanyRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -22,11 +21,13 @@ public class CompanyRepository implements ICompanyRepository {
     @Override
     public List<Company> findAll() {
         // create a query
-        var theQuery = entityManager.createQuery("FROM Company", Company.class);
+        var theQuery = entityManager.createQuery(
+                "select c FROM Company c " +
+                        "left join fetch c.departments "
+                , Company.class);
 
         // execute query and get result list
         var companies = theQuery.getResultList();
-        companies.stream().forEach(x -> x.setDepartments(new ArrayList<>()));
 
         return companies;
     }
@@ -44,16 +45,14 @@ public class CompanyRepository implements ICompanyRepository {
     @Override
     public Company findByIdWithDepartments(int theId) {
         TypedQuery<Company> query = entityManager.createQuery(
-                "select comp from Company comp " +
-                        "inner join fetch comp.departments dep " +
-                        "where comp.id = :data", Company.class
+                "select c from Company c " +
+                        "left join fetch c.departments " +
+                        "where c.id = :data", Company.class
         );
 
         query.setParameter("data", theId);
 
         var company = query.getSingleResult();
-        company.getDepartments().stream().forEach(x -> x.setEmployees(new ArrayList<>()));
-
 
         return company;
     }
