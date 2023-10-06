@@ -1,4 +1,4 @@
-package nl.rikdonk.mytestapp.services.repositories.interfaces;
+package nl.rikdonk.mytestapp.repositories.interfaces;
 
 import nl.rikdonk.mytestapp.entities.Employee;
 

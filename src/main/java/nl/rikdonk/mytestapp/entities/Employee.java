@@ -1,8 +1,10 @@
 package nl.rikdonk.mytestapp.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -28,12 +30,10 @@ public class Employee {
     @JoinColumn(name="employee_detail_id")
     private EmployeeDetail employeeDetail;
 
-
     @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH}) // removes only the department, not the employee
     @JoinColumn(name="department_id") // column name in table Employee
     @JsonBackReference // prevent Infinite recursion (StackOverFlowError)
     private Department department;
-
 
     // define constructors
     public Employee() {

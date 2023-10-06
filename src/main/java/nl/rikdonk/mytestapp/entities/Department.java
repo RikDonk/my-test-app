@@ -1,8 +1,12 @@
 package nl.rikdonk.mytestapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +24,14 @@ public class Department {
     @OneToMany(mappedBy = "department", // mapped to department in Employee class
             fetch = FetchType.LAZY, // is the default
             cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH}) // does not cascade delete
+    //@JsonIgnore // prevent error 400
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<Employee> employees;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH}) // removes only the department, not the employee
+    @JoinColumn(name="company_id") // column name in table Employee
+    //@JsonBackReference // prevent Infinite recursion (StackOverFlowError)
+    private Company company;
 
     public Department() {
     }

@@ -1,7 +1,9 @@
 package nl.rikdonk.mytestapp.entities;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -15,6 +17,12 @@ public class Company {
 
     @Column(name="name")
     private String Name;
+
+    @OneToMany(mappedBy = "company",
+            fetch = FetchType.LAZY, // is the default
+            cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH}) // does not cascade delete
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private List<Department> departments;
 
     public Company() {
     }
@@ -38,6 +46,14 @@ public class Company {
 
     public void setName(String name) {
         Name = name;
+    }
+
+    public List<Department> getDepartments() {
+        return departments;
+    }
+
+    public void setDepartments(List<Department> departments) {
+        this.departments = departments;
     }
 
     @Override

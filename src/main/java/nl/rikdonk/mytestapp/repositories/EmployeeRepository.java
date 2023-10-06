@@ -1,9 +1,9 @@
-package nl.rikdonk.mytestapp.services.repositories;
+package nl.rikdonk.mytestapp.repositories;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import nl.rikdonk.mytestapp.entities.Employee;
-import nl.rikdonk.mytestapp.services.repositories.interfaces.IEmployeeRepository;
+import nl.rikdonk.mytestapp.repositories.interfaces.IEmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

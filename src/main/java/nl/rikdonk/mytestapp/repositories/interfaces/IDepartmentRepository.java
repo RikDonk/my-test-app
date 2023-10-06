@@ -1,6 +1,8 @@
-package nl.rikdonk.mytestapp.services.repositories.interfaces;
+package nl.rikdonk.mytestapp.repositories.interfaces;
 
+import nl.rikdonk.mytestapp.entities.Company;
 import nl.rikdonk.mytestapp.entities.Department;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -13,4 +15,7 @@ public interface IDepartmentRepository {
     Department save(Department theEmployee);
 
     void deleteById(int theId);
+
+    Department findByIdWithEmployees(int theId);
+
 }

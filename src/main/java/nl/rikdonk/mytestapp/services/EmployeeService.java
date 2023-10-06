@@ -1,7 +1,7 @@
 package nl.rikdonk.mytestapp.services;
 
 import jakarta.transaction.Transactional;
-import nl.rikdonk.mytestapp.services.repositories.interfaces.IEmployeeRepository;
+import nl.rikdonk.mytestapp.repositories.interfaces.IEmployeeRepository;
 import nl.rikdonk.mytestapp.entities.Employee;
 import nl.rikdonk.mytestapp.services.interfaces.IEmployeeService;
 import org.springframework.stereotype.Service;
