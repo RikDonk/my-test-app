@@ -57,6 +57,14 @@ public class Department {
         Name = name;
     }
 
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
     public List<Employee> getEmployees() {
         return employees;
     }

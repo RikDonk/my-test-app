@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IDepartmentRepository {
 
-    List<Department> findAll();
+    List<Department> findAll(int companyId);
 
     Department findById(int theId);
 

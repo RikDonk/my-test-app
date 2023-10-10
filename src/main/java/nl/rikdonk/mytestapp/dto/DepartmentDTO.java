@@ -1,11 +1,14 @@
 package nl.rikdonk.mytestapp.dto;
 
-import jakarta.persistence.Column;
+import nl.rikdonk.mytestapp.entities.Company;
+
+import java.util.List;
 
 public class DepartmentDTO {
     private int id;
-
-    private String Name;
+    private String name;
+    private Company company;
+    private List<EmployeeDTO> employees;
 
     public int getId() {
         return id;
@@ -16,10 +19,26 @@ public class DepartmentDTO {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public List<EmployeeDTO> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<EmployeeDTO> employees) {
+        this.employees = employees;
     }
 }

@@ -29,13 +29,18 @@ public class DepartmentRepository implements IDepartmentRepository {
     }
 
     @Override
-    public List<Department> findAll() {
+    public List<Department> findAll(int companyId) {
         // create a query
-        var theQuery = entityManager.createQuery("FROM Department", Department.class);
+        var query = entityManager.createQuery(
+                "select c FROM Company c " +
+                        "left join fetch c.departments " +
+                        "where c.id = :data",
+                Company.class);
+
+        query.setParameter("data", companyId);
 
         // execute query and get result list
-        var departments = theQuery.getResultList();
-        departments.stream().forEach(x -> x.setEmployees(new ArrayList<>()));
+        var departments = query.getSingleResult().getDepartments();
 
         return departments;
     }
@@ -51,7 +56,8 @@ public class DepartmentRepository implements IDepartmentRepository {
         TypedQuery<Department> query = entityManager.createQuery(
                 "select d from Department d " +
                         "join fetch d.employees " +
-                        "where d.id = :data", Department.class
+                        "where d.id = :data",
+                Department.class
         );
 
         query.setParameter("data", theId);

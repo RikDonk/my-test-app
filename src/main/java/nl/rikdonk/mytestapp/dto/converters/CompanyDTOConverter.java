@@ -2,6 +2,7 @@ package nl.rikdonk.mytestapp.dto.converters;
 
 import nl.rikdonk.mytestapp.dto.CompanyDTO;
 import nl.rikdonk.mytestapp.dto.DepartmentDTO;
+import nl.rikdonk.mytestapp.dto.DepartmentListDTO;
 import nl.rikdonk.mytestapp.entities.Company;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,10 @@ public class CompanyDTOConverter extends DTOConverter {
     private ModelMapper modelMapper;
 
     public CompanyDTO convert(Company company) {
+
         CompanyDTO companyDTO = modelMapper.map(company, CompanyDTO.class);
 
-        companyDTO.setDepartments(mapList(company.getDepartments(), DepartmentDTO.class));
-
+        companyDTO.setDepartments(mapList(company.getDepartments(), DepartmentListDTO.class));
         return companyDTO;
     }
 

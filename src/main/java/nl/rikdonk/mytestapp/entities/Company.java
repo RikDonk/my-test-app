@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,7 +21,7 @@ public class Company {
 
     @OneToMany(mappedBy = "company",
             fetch = FetchType.LAZY, // is the default
-            cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH}) // does not cascade delete
+            cascade = {CascadeType.ALL})
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<Department> departments;
 
@@ -54,6 +55,15 @@ public class Company {
 
     public void setDepartments(List<Department> departments) {
         this.departments = departments;
+    }
+
+    public void add (Department tempDepartment) {
+        if(departments == null) {
+            departments = new ArrayList<>();
+        }
+
+        departments.add(tempDepartment);
+        tempDepartment.setCompany(this);
     }
 
     @Override

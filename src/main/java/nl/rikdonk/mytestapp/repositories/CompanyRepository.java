@@ -1,6 +1,7 @@
 package nl.rikdonk.mytestapp.repositories;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import nl.rikdonk.mytestapp.entities.Company;
 import nl.rikdonk.mytestapp.repositories.interfaces.ICompanyRepository;
@@ -33,30 +34,38 @@ public class CompanyRepository implements ICompanyRepository {
     }
 
     @Override
-    public Company save(Company theEmployee) {
-        return null;
+    public Company save(Company company) {
+        company.getDepartments().stream().forEach(x -> x.setCompany(company));
+
+        return entityManager.merge(company);
     }
 
     @Override
-    public void deleteById(int theId) {
-
+    public void deleteById(int companyId) {
+        var company = entityManager.find(Company.class, companyId);
+        entityManager.remove(company);
     }
 
     @Override
     public Company findByIdWithDepartments(int theId) {
-        TypedQuery<Company> query = entityManager.createQuery(
-                "select c from Company c " +
-                        "left join fetch c.departments " +
-                        "where c.id = :data", Company.class
-        );
+        Company company;
+        try {
+            TypedQuery<Company> query = entityManager.createQuery(
+                    "select c from Company c " +
+                            "left join fetch c.departments " +
+                            "where c.id = :data", Company.class
+            );
 
-        query.setParameter("data", theId);
+            query.setParameter("data", theId);
 
-        var company = query.getSingleResult();
+            company = query.getSingleResult();
+        }
+        catch(NoResultException exc) {
+            return null;
+        }
 
         return company;
     }
-
 
     @Override
     public Company findById(int theId) {

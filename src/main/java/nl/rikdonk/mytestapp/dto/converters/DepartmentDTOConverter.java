@@ -1,6 +1,7 @@
 package nl.rikdonk.mytestapp.dto.converters;
 
 import nl.rikdonk.mytestapp.dto.DepartmentDTO;
+import nl.rikdonk.mytestapp.dto.DepartmentListDTO;
 import nl.rikdonk.mytestapp.entities.Department;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,12 @@ public class DepartmentDTOConverter extends DTOConverter {
 
     public DepartmentDTO convert(Department department) {
 
-        DepartmentDTO departmentDTO = modelMapper.map(department, DepartmentDTO.class);
+        DepartmentDTO departmentListDTO = modelMapper.map(department, DepartmentDTO.class);
 
-        return departmentDTO;
+        return departmentListDTO;
     }
 
-    public Department reverse(DepartmentDTO departmentDTO) {
+    public Department reverse(DepartmentListDTO departmentDTO) {
 
         Department department = modelMapper.map(departmentDTO, Department.class);
 

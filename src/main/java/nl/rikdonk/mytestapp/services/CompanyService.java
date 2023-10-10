@@ -2,8 +2,10 @@ package nl.rikdonk.mytestapp.services;
 
 import jakarta.transaction.Transactional;
 import nl.rikdonk.mytestapp.dto.CompanyDTO;
+import nl.rikdonk.mytestapp.dto.CompanyListDTO;
 import nl.rikdonk.mytestapp.dto.converters.CompanyDTOConverter;
 import nl.rikdonk.mytestapp.entities.Company;
+import nl.rikdonk.mytestapp.entities.Department;
 import nl.rikdonk.mytestapp.exceptions.NotFoundException;
 import nl.rikdonk.mytestapp.repositories.interfaces.ICompanyRepository;
 import nl.rikdonk.mytestapp.services.interfaces.ICompanyService;
@@ -17,39 +19,24 @@ public class CompanyService implements ICompanyService {
 
     private ICompanyRepository repoCompany;
 
-    @Autowired
-    CompanyDTOConverter companyDTOConverter;
-
     public CompanyService(ICompanyRepository repoCompany) {
         this.repoCompany = repoCompany;
     }
 
     @Override
-    public List<CompanyDTO> findAll() {
-        var companies = repoCompany.findAll();
-
-        return companyDTOConverter.mapList(companies, CompanyDTO.class);
+    public List<Company> findAll() {
+        return repoCompany.findAll();
     }
 
     @Override
-    public CompanyDTO findById(int theId) {
-        Company company = null;
-
-        company = repoCompany.findByIdWithDepartments(theId);
-
-        if(company == null) {
-            throw new NotFoundException("Company not found - " + theId);
-        }
-
-        CompanyDTO companyDTO = companyDTOConverter.convert(company);
-
-        return companyDTO;
+    public Company findById(int theId) {
+        return repoCompany.findByIdWithDepartments(theId);
     }
 
     @Override
     @Transactional
-    public Company save(Company theCompany) {
-        return repoCompany.save(theCompany);
+    public Company save(Company company) {
+        return repoCompany.save(company);
     }
 
     @Override

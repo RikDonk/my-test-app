@@ -3,15 +3,13 @@ package nl.rikdonk.mytestapp.exceptions;
 public class ErrorResponse {
     private int status;
     private String message;
-    private long timeStamp;
 
     public ErrorResponse() {
     }
 
-    public ErrorResponse(int status, String message, long timeStamp) {
+    public ErrorResponse(int status, String message) {
         this.status = status;
         this.message = message;
-        this.timeStamp = timeStamp;
     }
 
     public int getStatus() {
@@ -30,11 +28,4 @@ public class ErrorResponse {
         this.message = message;
     }
 
-    public long getTimeStamp() {
-        return timeStamp;
-    }
-
-    public void setTimeStamp(long timeStamp) {
-        this.timeStamp = timeStamp;
-    }
 }

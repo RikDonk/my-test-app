@@ -1,11 +1,10 @@
 package nl.rikdonk.mytestapp.dto;
 
-import java.util.List;
-
-public class CompanyDTO {
+public class DepartmentListDTO {
     private int id;
+
     private String name;
-    private List<DepartmentListDTO> departments;
+    private int companyId;
 
     public int getId() {
         return id;
@@ -21,14 +20,6 @@ public class CompanyDTO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<DepartmentListDTO> getDepartments() {
-        return departments;
-    }
-
-    public void setDepartments(List<DepartmentListDTO> departments) {
-        this.departments = departments;
     }
 
 }
