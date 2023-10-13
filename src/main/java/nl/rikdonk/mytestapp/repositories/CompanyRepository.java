@@ -40,7 +40,18 @@ public class CompanyRepository implements ICompanyRepository {
     @Override
     public Company save(Company company) {
         company.getDepartments().stream().forEach(x -> x.setCompany(company));
-        return entityManager.merge(company);
+
+        if(company.getId() > 0){
+            Company dbCompany = entityManager.find(Company.class, company.getId());
+
+            dbCompany.setCity(company.getCity());
+            dbCompany.setDepartments(company.getDepartments());
+
+            return entityManager.merge(dbCompany);
+        }
+        else {
+            return entityManager.merge(company);
+        }
     }
 
 

@@ -35,24 +35,8 @@ public class CompanyService implements ICompanyService {
 
     @Override
     @Transactional
-    public Company add(Company company) {
+    public Company save(Company company) {
         return repoCompany.save(company);
-    }
-
-    @Override
-    @Transactional
-    public Company update(Company company) {
-        var dbCompany = repoCompany.findByIdWithDepartments(company.getId());
-
-        if(dbCompany == null) {
-            throw new NotFoundException("Company not found: " + company.getId());
-        }
-
-        dbCompany.setName(company.getName());
-        dbCompany.setCity(company.getCity());
-        dbCompany.setDepartments(company.getDepartments());
-
-        return repoCompany.save(dbCompany);
     }
 
     @Override

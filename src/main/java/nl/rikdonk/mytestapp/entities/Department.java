@@ -23,16 +23,13 @@ public class Department {
     @Size(min = 2, max = 45, message = "Department Name must be between 2 and 45 characters.")
     private String Name;
 
-    @OneToMany(mappedBy = "department", // mapped to department in Employee class
-            fetch = FetchType.LAZY, // is the default
-            cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH}) // does not cascade delete
-    //@JsonIgnore // prevent error 400
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @OneToMany(mappedBy = "department",
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
     private List<Employee> employees;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH}) // removes only the department, not the employee
-    @JoinColumn(name="company_id") // column name in table Employee
-    //@JsonBackReference // prevent Infinite recursion (StackOverFlowError)
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name="company_id")
     private Company company;
 
     public Department() {

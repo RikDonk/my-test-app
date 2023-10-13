@@ -51,7 +51,7 @@ public class CompanyRestController {
     public ResponseEntity<CompanyDTO> addCompany(@Valid @RequestBody CompanyDTO companyDTO) {
 
         var company = companyDTOConverter.reverse(companyDTO);
-        var savedCompany = companyService.add(company);
+        var savedCompany = companyService.save(company);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -65,7 +65,7 @@ public class CompanyRestController {
     public ResponseEntity<CompanyDTO> updateCompany(@Valid @RequestBody CompanyDTO companyDTO) {
 
         var company = companyDTOConverter.reverse(companyDTO);
-        var savedCompany = companyService.update(company);
+        var savedCompany = companyService.save(company);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")

@@ -8,8 +8,7 @@ public interface ICompanyService {
 
     Company findById(int theId);
 
-    Company add(Company theCompany);
-    Company update(Company theCompany);
+    Company save(Company theCompany);
 
     void deleteById(int theId);
 }

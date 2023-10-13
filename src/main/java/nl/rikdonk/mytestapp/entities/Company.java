@@ -25,10 +25,7 @@ public class Company {
     @Size(min = 2, max = 45, message = "City Name must be between 2 and 45 characters.")
     private String City;
 
-    @OneToMany(mappedBy = "company",
-            fetch = FetchType.LAZY, // is the default
-            cascade = {CascadeType.ALL})
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<Department> departments;
 
     public Company() {
