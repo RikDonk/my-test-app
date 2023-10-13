@@ -2,6 +2,7 @@ package nl.rikdonk.mytestapp.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,7 +18,12 @@ public class Company {
     private int id;
 
     @Column(name="name")
+    @Size(min = 2, max = 45, message = "Company Name must be between 2 and 45 characters.")
     private String Name;
+
+    @Column(name="city")
+    @Size(min = 2, max = 45, message = "City Name must be between 2 and 45 characters.")
+    private String City;
 
     @OneToMany(mappedBy = "company",
             fetch = FetchType.LAZY, // is the default
@@ -28,9 +34,10 @@ public class Company {
     public Company() {
     }
 
-    public Company(int id, String name) {
+    public Company(int id, String name, String city) {
         this.id = id;
         Name = name;
+        City = city;
     }
 
     public int getId() {
@@ -47,6 +54,14 @@ public class Company {
 
     public void setName(String name) {
         Name = name;
+    }
+
+    public String getCity() {
+        return City;
+    }
+
+    public void setCity(String city) {
+        City = city;
     }
 
     public List<Department> getDepartments() {
@@ -71,6 +86,7 @@ public class Company {
         return "Company{" +
                 "id=" + id +
                 ", Name='" + Name + '\'' +
+                ", Came='" + City + '\'' +
                 '}';
     }
 }

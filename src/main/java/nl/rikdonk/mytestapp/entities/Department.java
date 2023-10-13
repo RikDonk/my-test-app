@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class Department {
     private int id;
 
     @Column(name="name")
+    @Size(min = 2, max = 45, message = "Department Name must be between 2 and 45 characters.")
     private String Name;
 
     @OneToMany(mappedBy = "department", // mapped to department in Employee class

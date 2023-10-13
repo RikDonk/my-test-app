@@ -4,7 +4,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import nl.rikdonk.mytestapp.entities.Company;
+import nl.rikdonk.mytestapp.exceptions.NotFoundException;
 import nl.rikdonk.mytestapp.repositories.interfaces.ICompanyRepository;
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,9 +15,11 @@ import java.util.List;
 public class CompanyRepository implements ICompanyRepository {
 
     private EntityManager entityManager;
+    private Session session;
 
-    public CompanyRepository(EntityManager entityManager) {
+    public CompanyRepository(EntityManager entityManager, Session session) {
         this.entityManager = entityManager;
+        this.session = session;
     }
 
 
@@ -36,9 +40,9 @@ public class CompanyRepository implements ICompanyRepository {
     @Override
     public Company save(Company company) {
         company.getDepartments().stream().forEach(x -> x.setCompany(company));
-
         return entityManager.merge(company);
     }
+
 
     @Override
     public void deleteById(int companyId) {
@@ -65,6 +69,16 @@ public class CompanyRepository implements ICompanyRepository {
         }
 
         return company;
+    }
+
+    @Override
+    public Boolean exists(int id) {
+
+        if (entityManager.find(Company.class, id) != null) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override

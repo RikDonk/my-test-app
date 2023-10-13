@@ -46,9 +46,15 @@ public class DepartmentService implements IDepartmentService {
 
     @Override
     @Transactional
-    public Department save(Department theDepartment) {
+    public Department add(Department theDepartment) {
         return repoDepartment.save(theDepartment);
     }
+
+    @Override
+    public Department update(Department theDepartment) {
+        return null;
+    }
+
 
     @Override
     @Transactional

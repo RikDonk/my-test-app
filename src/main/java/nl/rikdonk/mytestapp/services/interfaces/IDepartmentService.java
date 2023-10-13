@@ -11,7 +11,8 @@ public interface IDepartmentService {
 
     DepartmentDTO findById(int theId);
 
-    Department save(Department theDepartment);
+    Department add(Department theDepartment);
+    Department update(Department theDepartment);
 
     void deleteById(int theId);
 }

@@ -11,9 +11,12 @@ public interface ICompanyRepository {
 
     Company findById(int theId);
 
-    Company save(Company theEmployee);
+    Company save(Company company);
 
     void deleteById(int theId);
 
     Company findByIdWithDepartments(int theId);
+
+    Boolean exists (int id);
 }
+

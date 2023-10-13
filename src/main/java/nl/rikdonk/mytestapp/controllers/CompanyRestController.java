@@ -1,14 +1,12 @@
 package nl.rikdonk.mytestapp.controllers;
 
+import jakarta.validation.Valid;
 import nl.rikdonk.mytestapp.dto.CompanyDTO;
 import nl.rikdonk.mytestapp.dto.CompanyListDTO;
 import nl.rikdonk.mytestapp.dto.converters.CompanyDTOConverter;
-import nl.rikdonk.mytestapp.exceptions.ErrorResponse;
 import nl.rikdonk.mytestapp.exceptions.NotFoundException;
 import nl.rikdonk.mytestapp.services.interfaces.ICompanyService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -50,10 +48,10 @@ public class CompanyRestController {
     }
 
     @PostMapping()
-    public ResponseEntity<CompanyDTO> addCompany(@RequestBody CompanyDTO companyDTO) {
+    public ResponseEntity<CompanyDTO> addCompany(@Valid @RequestBody CompanyDTO companyDTO) {
 
         var company = companyDTOConverter.reverse(companyDTO);
-        var savedCompany = companyService.save(company);
+        var savedCompany = companyService.add(company);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -64,10 +62,10 @@ public class CompanyRestController {
     }
 
     @PutMapping()
-    public ResponseEntity<CompanyDTO> updateCompany(@RequestBody CompanyDTO companyDTO) {
+    public ResponseEntity<CompanyDTO> updateCompany(@Valid @RequestBody CompanyDTO companyDTO) {
 
         var company = companyDTOConverter.reverse(companyDTO);
-        var savedCompany = companyService.save(company);
+        var savedCompany = companyService.update(company);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")

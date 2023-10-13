@@ -54,14 +54,14 @@ public class DepartmentRestController {
     public Department addDepartment(@RequestBody Department theDepartment) {
 
         theDepartment.setId(0); // only with a new Department
-        var dbDepartment = departmentService.save(theDepartment);
+        var dbDepartment = departmentService.add(theDepartment);
         return dbDepartment;
     }
 
     @PutMapping("/department")
     public Department updateDepartment(@RequestBody Department theDepartment) {
 
-        var dbDepartment = departmentService.save(theDepartment);
+        var dbDepartment = departmentService.update(theDepartment);
         return dbDepartment;
     }
 
