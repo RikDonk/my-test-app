@@ -25,7 +25,7 @@ CREATE TABLE `departments` (
   `company_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_COMPANY_idx` (`company_id`),
-    CONSTRAINT `FK_COMPANY` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+    CONSTRAINT `FK_COMPANY` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `employee_detail`;
@@ -52,16 +52,16 @@ CREATE TABLE `employees` (
   `department_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_DEPARTMENT_idx` (`department_id`),
-    CONSTRAINT `FK_DEPARTMENT` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT `FK_DEPARTMENT` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   KEY `FK_DETAIL_idx` (`employee_detail_id`),
-    CONSTRAINT `FK_DETAIL` FOREIGN KEY (`employee_detail_id`) REFERENCES `employee_detail` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+    CONSTRAINT `FK_DETAIL` FOREIGN KEY (`employee_detail_id`) REFERENCES `employee_detail` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 --
 -- Data for table `employee_detail + employees`
 --
 INSERT INTO `companies` VALUES
-	(1, 'Nationale Politie'),
-	(2, 'McDonalds');
+	(1, 'Nationale Politie','Zwolle'),
+	(2, 'McDonalds','Groningen');
 
 INSERT INTO `departments` VALUES
 	(1, 'Algmene Opsporing', 1),
